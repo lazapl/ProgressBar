@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background: linear-gradient(#ff3cac, #784ba0, #2b86c5);
+            height: 98vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+        }
+        .progress-bar{
+            width: 299px;
+            height: 3px;
+            background-color: #e0e0e0;
+            border-radius: 3px;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        .extra{
+            height: 25px;
+            width: 25px;
+            border: 3px solid #e0e0e0;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: white;
+            color: #999999;
+            top: -13px;
+            left: 0px;
+            position: relative;
+            z-index: 2;
+        }
+        .extra.active{
+            border: 3px solid orange;
+        }
+        .buttons{
+            display: flex;
+            margin-top:30px;
+        }
+        button{
+            padding: 8px 30px;
+            margin: 5px;
+            
+        }
+        button:hover{
+            cursor: pointer;
+        }
+        .next{
+            background-color: #D23737;
+            font-size: 14px;
+            font-family: sans-serif;
+            border: none;
+            color: #fff;
+        }
+        .prev{
+            background-color: #E0E0E0;
+            margin: 5px;
+            padding: 8px 30px;
+            font-size: 14px;
+            font-family: sans-serif;
+            border: none;
+            color: white;
+        }
+        .progress-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .color-progress{
+            position: absolute;
+            height: 3px;
+            width: 0%;
+            background-color: red;
+            z-index: 2;
+            transition: 0.5s;
+        }
+        .orangeBr{
+            border: 3px solid orange;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-container">
+
+    <div class="progress-bar">
+        <div class="color-progress"></div>
+        <div class="circle1 extra active">1</div>
+        <div class="circle2 extra">2</div>
+        <div class="circle3 extra">3</div>
+        <div class="circle4 extra">4</div>  
+    </div>  
+    <div class="buttons">
+        <button class="prev">previous</button>
+        <button class="next">next</button>
+    
+    </div>
+
+
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const nextBtn = document.querySelector(".next");
+            const prevBtn = document.querySelector(".prev");
+            const colorProgress = document.querySelector(".color-progress");
+            const circles = document.querySelectorAll(".extra");
+    
+            let currentStep = 0;
+    
+            nextBtn.addEventListener('click', () => {
+                if (currentStep < circles.length - 1) {
+                    currentStep++;
+                    updateProgress();
+                }
+            });
+    
+            prevBtn.addEventListener('click', () => {
+                if (currentStep > 0) {
+                    currentStep--;
+                    updateProgress();
+                }
+            });
+    
+            function updateProgress() {
+                const stepWidth = 100 / (circles.length - 1);
+                const newWidth = stepWidth * currentStep + "%";
+                colorProgress.style.width = newWidth;
+    
+                circles.forEach((circle, index) => {
+                    if (index <= currentStep) {
+                        circle.classList.add("orangeBr");
+                    } else {
+                        circle.classList.remove("orangeBr");
+                    }
+                });
+            }
+        });
+    </script>
+    
+
+
+    
+</body>
+</html>
